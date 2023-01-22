@@ -38,24 +38,21 @@ def circular_convolve_mra( signal, ker ):
         ker: real 1D array
         signal and ker must have same shape
         Modification of 
-            https://stackoverflow.com/questions/35474078/python-1d-array-circular-convolution
+        https://stackoverflow.com/questions/35474078/python-1d-array-circular-convolution
     '''
 
     # check if signal and ker have same shape
-    
+
     assert signal.shape == ker.shape
 
     fSignal = np.fft.fft(signal)
     fKer = np.fft.fft(np.flip(ker))
-    # fKer = np.fft.fft(ker)
     fConv = fSignal * fKer
     conv = np.real(np.fft.ifft(fConv))
-    conv = np.flip(conv)
     asList = np.flip(conv).tolist()
-    # asList = np.flip(conv).astype(np.int64).tolist()
-    # asList = conv.astype(np.int64).tolist()
     return asList
-    
+
+    # return np.flip(np.real(np.fft.ifft(np.fft.fft(signal)*np.fft.fft(np.flip(ker))))).tolist()
     # return np.flip(np.real(np.fft.ifft(np.fft.fft(signal)*np.fft.fft(np.flip(ker))))).astype(np.int64).tolist()
 
 

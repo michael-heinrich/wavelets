@@ -149,15 +149,11 @@ class TestDwt(unittest.TestCase):
         print("mra_series: ", mra_series)
 
         reconstructed = reconstruct_signal(mra_series)
-
-        # make sure at least one element of mra_series is nonzero
-        print(reconstructed)
-        self.assertTrue(reconstructed.any())
+        print("reconstructed: ", reconstructed)
 
         # make sure the reconstructed series is the same as the original
-        self.assertTrue(np.array_equal(time_series, reconstructed))
-
-    # check if the reconstructed time series is the same as the original
+        # compare all elements of the arrays with an epsilon of 1e-10
+        self.assertTrue(np.allclose(time_series, reconstructed, atol=1e-10))
 
     def test_reconstruct_long(self):
         print("test_reconstruct_long")
@@ -168,10 +164,11 @@ class TestDwt(unittest.TestCase):
         print("mra_series: ", mra_series)
 
         reconstructed = reconstruct_signal(mra_series)
-
-        # make sure at least one element of mra_series is nonzero
-        print(reconstructed)
-        self.assertTrue(reconstructed.any())
+        print("reconstructed: ", reconstructed)
 
         # make sure the reconstructed series is the same as the original
-        self.assertTrue(np.array_equal(time_series, reconstructed))
+        # compare all elements of the arrays with an epsilon of 1e-10
+        self.assertTrue(np.allclose(time_series, reconstructed, atol=1e-10))
+
+
+        

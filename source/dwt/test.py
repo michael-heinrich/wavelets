@@ -44,6 +44,21 @@ plt.show()
 
 dwt_series = modwt(time_series, 'haar', levels)
 dwt_series = modwtmra(dwt_series, 'haar')
+summed = sum(dwt_series, axis=0)
+
+
+# new figure with time series and summed series
+plt.figure()
+plt.plot(t, time_series, label='original')
+plt.plot(t, summed, label='summed')
+plt.xlabel('time (days)')
+plt.ylabel('head values (meters)')
+plt.title('Complete signal')
+plt.legend()
+plt.show()
+
+
+
 plt.figure()
 for level in range(levels):
     plt.plot(dwt_series[level], label='level' + str(level))
