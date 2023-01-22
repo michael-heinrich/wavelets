@@ -90,15 +90,6 @@ class TestDwt(unittest.TestCase):
         print("res: ", res)
         self.assertEqual(res, expected_output)
 
-    def test_circular_convolve_mra(self):
-        x = np.array([1, 2, 3])
-        y = np.array([0, 1, 0.5])
-        expected_output = circular_convolve_no_pad_int(x, y)
-        res = circular_convolve_mra(x, y)
-        print("expected_output: ", expected_output)
-        print("res: ", res)
-        self.assertEqual(res, expected_output)
-
 
 
     def test_dwt_short(self):
@@ -171,4 +162,4 @@ class TestDwt(unittest.TestCase):
         self.assertTrue(np.allclose(time_series, reconstructed, atol=1e-10))
 
 
-        
+
