@@ -40,7 +40,47 @@ def circular_convolve_mra( signal, ker ):
         Modification of 
             https://stackoverflow.com/questions/35474078/python-1d-array-circular-convolution
     '''
-    return np.flip(np.real(np.fft.ifft(np.fft.fft(signal)*np.fft.fft(np.flip(ker))))).astype(np.int64).tolist()
+
+    # check if signal and ker have same shape
+    
+    assert signal.shape == ker.shape
+
+    fSignal = np.fft.fft(signal)
+    fKer = np.fft.fft(np.flip(ker))
+    # fKer = np.fft.fft(ker)
+    fConv = fSignal * fKer
+    conv = np.real(np.fft.ifft(fConv))
+    conv = np.flip(conv)
+    asList = np.flip(conv).tolist()
+    # asList = np.flip(conv).astype(np.int64).tolist()
+    # asList = conv.astype(np.int64).tolist()
+    return asList
+    
+    # return np.flip(np.real(np.fft.ifft(np.fft.fft(signal)*np.fft.fft(np.flip(ker))))).astype(np.int64).tolist()
+
+
+def circular_convolve_no_pad(x, y):
+    x_len = x.shape[0]
+    y_len = y.shape[0]
+    conv = np.zeros(x_len)
+    for n in range(x_len):
+        for m in range(y_len):
+            # print(f"n={n}, m={m}, (n-m)={(n-m)}, (n-m) % y_len={(n-m) % y_len}")
+            conv[n] += x[m] * y[(n-m) % y_len]
+    asList = conv.tolist()
+    return asList
+
+    
+def circular_convolve_no_pad_int(x, y):
+    x_len = x.shape[0]
+    y_len = y.shape[0]
+    conv = np.zeros(x_len)
+    for n in range(x_len):
+        for m in range(y_len):
+            # print(f"n={n}, m={m}, (n-m)={(n-m)}, (n-m) % y_len={(n-m) % y_len}")
+            conv[n] += x[m] * y[(n-m) % y_len]
+    asList = conv.astype(np.int64).tolist()
+    return asList
 
 
 def circular_convolve_d(h_t, v_j_1, j):
