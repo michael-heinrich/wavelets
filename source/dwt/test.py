@@ -1,7 +1,6 @@
 from numpy import *
 import matplotlib.pyplot as plt
-from modwt import *
-import pywt
+from modwt.modwt import *
 
 # Define function to compute hydraulic heads
 def fluct_head(params, x, t):
@@ -35,27 +34,12 @@ params2 = [A2, omega2, D]
 
 time_series = fluct_head(params1, x, t) + fluct_head(params2, x, t)
 
-trafo = pywt.swt(time_series, 'haar', level=9, norm=True)
-print(len(trafo))
-plt.plot(trafo[0][0])
-plt.plot(trafo[0][1])
-plt.plot(trafo[1][0])
-plt.plot(trafo[1][1])
-plt.plot(trafo[2][0])
-plt.plot(trafo[2][1])
-plt.plot(trafo[3][0])
-plt.plot(trafo[3][1])
-
-
-
-
-
 plt.figure()
 plt.plot(t, time_series)
 plt.xlabel('time (days)')
 plt.ylabel('head values (meters)')
 plt.title('Complete signal')
-
+plt.show()
 
 
 dwt_series = modwt(time_series, 'haar', levels)
